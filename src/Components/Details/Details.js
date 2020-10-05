@@ -21,16 +21,26 @@ class ConnectedDetails extends Component {
       itemLoading: false
     };
   }
+  imageUrl = "";
 
-  async fetchProductAndRelatedItems(productId) {
+  async fetchProductAndRelatedItems(url, productId) {
     this.setState({ itemLoading: true });
-
-    let item = await Api.getItemUsingID(productId);
-
-    let relatedItems = await Api.searchItems({
-      category: item.category
+    let relatedItems = [];
+    let item;
+    await Api.getItemUsingID(url, productId).then(data => {
+      console.log(data);
+      item = data;
     });
 
+    if (item != null) {
+      await Api.searchItems(url, {
+        category: item.category
+      }).then(data => {
+        console.log(data);
+        relatedItems = data;
+      });
+
+    }
     // Make sure this component is still mounted before we set state..
     if (this.isCompMounted) {
       this.setState({
@@ -45,13 +55,16 @@ class ConnectedDetails extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     // If ID of product changed in URL, refetch details for that product
     if (this.props.match.params.id !== prevProps.match.params.id) {
-      this.fetchProductAndRelatedItems(this.props.match.params.id);
+      let baseUrl = document.querySelector("meta[property='base-url']").getAttribute("content");
+      this.fetchProductAndRelatedItems(baseUrl, this.props.match.params.id);
     }
   }
 
   componentDidMount() {
     this.isCompMounted = true;
-    this.fetchProductAndRelatedItems(this.props.match.params.id);
+    this.imageUrl = document.querySelector("meta[property='image-url']").getAttribute("content");
+    let baseUrl = document.querySelector("meta[property='base-url']").getAttribute("content");
+    this.fetchProductAndRelatedItems(baseUrl, this.props.match.params.id);
   }
 
   componentWillUnmount() {
@@ -80,7 +93,7 @@ class ConnectedDetails extends Component {
         </div>
         <div style={{ display: "flex" }}>
           <img
-            src={this.state.item.imageUrls[0]}
+            src={this.imageUrl + this.state.item.imageUrls[0]}
             alt=""
             width={250}
             height={250}
@@ -103,7 +116,7 @@ class ConnectedDetails extends Component {
                 fontSize: 16
               }}
             >
-              Price: {this.state.item.price} $
+              Price: {this.state.item.price} KES
             </div>
             {this.state.item.popular && (
               <div style={{ fontSize: 14, marginTop: 5, color: "#228B22" }}>

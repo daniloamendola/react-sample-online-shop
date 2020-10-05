@@ -8,6 +8,10 @@ export const showCartDlg = status => ({
   type: CONSTANTS.SHOW_CART_DLG,
   payload: status
 });
+export const showPaymentDialog = status => ({
+  type: CONSTANTS.SHOW_PAYMENT_DLG,
+  payload: status
+})
 export const deleteCartItem = id => ({
   type: CONSTANTS.DELETE_CART_ITEM,
   payload: id
@@ -30,4 +34,12 @@ export const setLoggedInUser = user => ({
 });
 export const logout = () => ({
   type: CONSTANTS.LOGOUT
+});
+export const deleteCatalogtem = id => ({
+  type: CONSTANTS.DELETE_CATALOG_ITEM,
+  payload: id
+});
+export const editCatalogItem = item => ({
+  type: CONSTANTS.EDIT_CATALOG_ITEM,
+  payload: item
 });

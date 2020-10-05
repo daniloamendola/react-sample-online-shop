@@ -10,6 +10,7 @@ import ProductsHeader from "../ProductsHeader/ProductsHeader";
 // It determines from query string which products to fetch.
 // The URL is checked on initial mount and when URL changes.
 class ProductList extends Component {
+  
   constructor(props) {
     super(props);
 
@@ -21,13 +22,16 @@ class ProductList extends Component {
     this.updateQueryStr = this.updateQueryStr.bind(this);
   }
 
-  async fetchData() {
+  async fetchData(url) {
     this.setState({ loading: true });
 
     // Parse the query string
     let qsAsObject = queryString.parse(this.props.location.search);
-
-    let results = await Api.searchItems(qsAsObject);
+    let results;
+    await Api.searchItems(url, qsAsObject).then(data => {
+      console.log(data);
+      results = data;
+    });
 
     this.setState({
       items: results.data,
@@ -37,7 +41,8 @@ class ProductList extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    let baseUrl = document.querySelector("meta[property='base-url']").getAttribute("content");
+    this.fetchData(baseUrl);
   }
 
   updateQueryStr(newValues) {

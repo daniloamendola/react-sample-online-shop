@@ -49,7 +49,8 @@ class ConnectedHeader extends Component {
     return (
       <AppBar
         position="static"
-        style={{ backgroundColor: "#FAFAFB", padding: 10 }}
+        elevation={0}
+        style={{ backgroundColor: "#F5F5F5", padding: 10 }}
       >
         <Toolbar>
           <div className="left-part">
@@ -61,7 +62,7 @@ class ConnectedHeader extends Component {
               <MenuIcon size="medium" />
             </IconButton>
 
-            <img src={cartImage} alt={"Logo"} style={{ marginLeft: 10 }} />
+            <img src={cartImage} alt={"TIMESHOP"} style={{ marginLeft: 10 }} />
             <TextField
               label="Search products"
               value={this.state.searchTerm}
@@ -93,9 +94,9 @@ class ConnectedHeader extends Component {
               onClick={() => {
                 this.props.history.push(
                   "/?category=" +
-                    this.state.categoryFilterValue +
-                    "&term=" +
-                    this.state.searchTerm
+                  this.state.categoryFilterValue +
+                  "&term=" +
+                  this.state.searchTerm
                 );
               }}
             >
@@ -116,15 +117,15 @@ class ConnectedHeader extends Component {
                 Log in
               </Button>
             ) : (
-              <Avatar
-                onClick={event => {
-                  this.setState({ anchorEl: event.currentTarget });
-                }}
-                style={{ backgroundColor: "#3f51b5", marginRight: 10 }}
-              >
-                <Person />
-              </Avatar>
-            )}
+                <Avatar
+                  onClick={event => {
+                    this.setState({ anchorEl: event.currentTarget });
+                  }}
+                  style={{ backgroundColor: "#3f51b5", marginRight: 10 }}
+                >
+                  <Person />
+                </Avatar>
+              )}
             <IconButton
               aria-label="Cart"
               onClick={() => {
@@ -148,8 +149,19 @@ class ConnectedHeader extends Component {
                   this.props.history.push("/order");
                 }}
               >
-                Checkout page
+                Orders
               </MenuItem>
+              {(localStorage.getItem('is_admin') == 1) ?
+                <MenuItem
+                  onClick={() => {
+                    this.setState({ anchorEl: null });
+                    this.props.dispatch(toggleMenu());
+                    this.props.history.push("/manage-catalog");
+                  }}
+                >
+                  Manage Catalog
+              </MenuItem> : ""
+              }
               <MenuItem
                 onClick={() => {
                   Auth.signout(() => {

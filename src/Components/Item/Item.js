@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 
 class ConnectedItem extends Component {
   render() {
+    let imageUrl = document.querySelector("meta[property='image-url']").getAttribute("content");
     return (
       <Card
         style={{ width: 200, height: 270, margin: 10, display: "inline-block" }}
@@ -25,7 +26,7 @@ class ConnectedItem extends Component {
         >
           <CardMedia
             style={{ height: 140 }}
-            image={this.props.item.imageUrls[0]}
+            image={imageUrl + ""+ this.props.item.imageUrls[0]}
           />
           <CardContent style={{ height: 50 }}>
             <div
@@ -39,7 +40,7 @@ class ConnectedItem extends Component {
             >
               {this.props.item.name}
             </div>
-            <div style={{ margin: 5 }}>Price: {this.props.item.price} $</div>
+            <div style={{ margin: 5 }}>Price: {this.props.item.price} KES</div>
             <div style={{ color: "#1a9349", fontWeight: "bold", margin: 5 }}>
               {this.props.item.popular && "Popular"}
             </div>

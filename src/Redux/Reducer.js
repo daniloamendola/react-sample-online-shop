@@ -4,6 +4,7 @@ import * as CONSTANTS from "./Constants";
 const initialState = {
   cartItems: [],
   showCartDialog: false,
+  showPaymentDialog: false,
   showMenu: true,
   checkedOutItems: [],
   loggedInUser: null
@@ -31,6 +32,8 @@ const rootReducer = (state = initialState, action) => {
     }
     case CONSTANTS.SHOW_CART_DLG:
       return { ...state, showCartDialog: action.payload };
+      case CONSTANTS.SHOW_PAYMENT_DLG:
+      return { ...state, showPaymentDialog: action.payload };
     case CONSTANTS.DELETE_CART_ITEM:
       return {
         ...state,
@@ -60,7 +63,7 @@ const rootReducer = (state = initialState, action) => {
 
       // If we couldn't find such item, do nothing.
       return state;
-    }
+    };
     default:
       return state;
   }
