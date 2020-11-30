@@ -2,8 +2,7 @@
 
 Online shop prototype implemented using React, Redux, React Router, and React Material UI library. 
 
-
-<img src="https://raw.githubusercontent.com/giorgi-m/online-shop/master/src/Images/screenshot.PNG" width="820" height="420">
+<img width="820" alt="screenshot-home" src="https://user-images.githubusercontent.com/1392946/100640544-d33a5c80-3336-11eb-93af-db2bc30c2a89.png">
  
 
 **Some features**:
